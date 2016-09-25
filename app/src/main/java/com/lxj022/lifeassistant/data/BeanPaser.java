@@ -69,7 +69,7 @@ public class BeanPaser {
      *
      * @param result
      */
-    public void parseWeatherData(String result) {
+    public WeatherBean parseWeatherData(String result) {
         try {
             JSONObject jsonObject = new JSONObject(result);
             WeatherBean weatherBean = new WeatherBean();
@@ -271,9 +271,11 @@ public class BeanPaser {
                     hourDatas.add(hourData);
                 }
                 weatherBean.setHourDatas(hourDatas);
+                return weatherBean;
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }
