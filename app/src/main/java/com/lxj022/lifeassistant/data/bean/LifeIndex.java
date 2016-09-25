@@ -1,8 +1,7 @@
 package com.lxj022.lifeassistant.data.bean;
 
 /**
- * @author Superdroid
- * @time 2016/9/6 18:50
+ * @author liuxuejiao
  * @des 生活指数
  */
 public class LifeIndex {
