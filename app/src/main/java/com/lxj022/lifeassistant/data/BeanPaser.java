@@ -8,6 +8,7 @@ import com.lxj022.lifeassistant.data.bean.DayWeather;
 import com.lxj022.lifeassistant.data.bean.HourData;
 import com.lxj022.lifeassistant.data.bean.LifeIndex;
 import com.lxj022.lifeassistant.data.bean.WeatherBean;
+import com.lxj022.lifeassistant.util.WeatherUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,7 +77,7 @@ public class BeanPaser {
             if (!jsonObject.isNull("cityId"))
                 weatherBean.setCityId(jsonObject.getString("cityId"));
             if (!jsonObject.isNull("cityName"))
-                weatherBean.setCityId(jsonObject.getString("cityName"));
+                weatherBean.setCityName(jsonObject.getString("cityName"));
             //            未来七天天气
             if (!jsonObject.isNull("days7")) {
                 JSONArray days7Arr = jsonObject.getJSONArray("days7");
@@ -88,7 +89,7 @@ public class BeanPaser {
                     if (!days7JsonObj.isNull("time"))
                         days7.setTime(days7JsonObj.getLong("time"));
                     if (!days7JsonObj.isNull("wholeTemp"))
-                        days7.setWholeTemp(days7JsonObj.getString("wholeTemp"));
+                        days7.setWholeTemp(days7JsonObj.getString("wholeTemp") + "°");
                     if (!days7JsonObj.isNull("wholeWea"))
                         days7.setWholeWea(days7JsonObj.getString("wholeWea"));
                     if (!days7JsonObj.isNull("wholeWindDirection"))
@@ -126,7 +127,7 @@ public class BeanPaser {
                     if (!days8JsonObj.isNull("dayImg"))
                         days8.setDayImg(days8JsonObj.getString("dayImg"));
                     if (!TextUtils.isEmpty(dayTemp) && !TextUtils.isEmpty(nightTemp)) {
-                        days8.setWholeTemp(dayTemp + "~" + nightTemp);
+                        days8.setWholeTemp(nightTemp + "~" + dayTemp + "°");
                     }
                     if (!TextUtils.isEmpty(dayWea) && !TextUtils.isEmpty(nightWea)) {
                         if (dayWea.equals(nightWea)) {
@@ -184,6 +185,13 @@ public class BeanPaser {
                 }
                 weatherBean.setZs_tomorrow(lifeIndices);
             }
+
+            if (!jsonObject.isNull("aqi")) {
+                JSONObject aqiObj = jsonObject.getJSONObject("aqi");
+                if (!aqiObj.isNull("AQI")) {
+                    weatherBean.setCurrentAqi("空气质量:" + aqiObj.getInt("AQI") + "|" + WeatherUtil.getAqiClass(aqiObj.getInt("AQI")));
+                }
+            }
             //            未来空气质量
             if (!jsonObject.isNull("aqi_5days")) {
                 JSONArray aqi_5daysArr = jsonObject.getJSONArray("aqi_5days");
@@ -205,6 +213,8 @@ public class BeanPaser {
              */
             if (!jsonObject.isNull("sk")) {
                 JSONObject skObj = jsonObject.getJSONObject("sk");
+                if (!skObj.isNull("sk_time"))
+                    weatherBean.setUpdateTime(skObj.getString("sk_time"));
                 if (!skObj.isNull("sk_temp"))
                     weatherBean.setCurrentTemp(skObj.getString("sk_temp"));
                 if (!skObj.isNull("humidity"))
@@ -213,8 +223,8 @@ public class BeanPaser {
                     weatherBean.setCurrentWindDirection(skObj.getString("windDirection"));
                 if (!skObj.isNull("windPower"))
                     weatherBean.setCurrentWindPower(skObj.getString("windPower"));
-                if (!jsonObject.isNull("uvDesc")) {
-                    JSONObject uvObj = jsonObject.getJSONObject("uvDesc");
+                if (!skObj.isNull("uvDesc")) {
+                    JSONObject uvObj = skObj.getJSONObject("uvDesc");
                     if (!uvObj.isNull("today"))
                         weatherBean.setTodayUv(uvObj.getString("today"));
                     if (!uvObj.isNull("tomorrow"))

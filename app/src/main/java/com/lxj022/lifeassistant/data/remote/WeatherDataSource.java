@@ -17,21 +17,26 @@ import java.util.List;
  */
 public class WeatherDataSource {
 
-    public WeatherBean getFeatureWeatherData(String cityId) {
+    /**
+     * 联网获取天气数据
+     *
+     * @param cityId 城市id
+     * @return
+     */
+    public WeatherBean getWeatherData(String cityId) {
+        WeatherBean weatherBean = null;
+//        获取请求地址
         String futureWeatherDataUrl = new UrlBuilder().getWeatherDataUrl(cityId);
         if (!TextUtils.isEmpty(futureWeatherDataUrl)) {
-            String result = AES.decrypt(HttpRequest.doGet(futureWeatherDataUrl));
-            try {
-                AES.WriteStringToFile("/mnt/sdcard/decrypt",new String(result.getBytes(), "utf-8"));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            Log.e("tag", "getFeatureWeatherData: " + result);
-            //请求结果不为空则进行解析
-            if (!TextUtils.isEmpty(result)) {
-                new BeanPaser().parseWeatherData(result);
+            String response = HttpRequest.doGet(futureWeatherDataUrl);
+            if (!TextUtils.isEmpty(response)) {
+                String result = AES.decrypt(response);
+                //请求结果不为空则进行解析
+                if (!TextUtils.isEmpty(result)) {
+                    weatherBean = new BeanPaser().parseWeatherData(result);
+                }
             }
         }
-        return null;
+        return weatherBean;
     }
 }

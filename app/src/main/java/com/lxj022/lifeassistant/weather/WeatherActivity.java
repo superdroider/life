@@ -54,7 +54,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void getFutureWeatherData() {
-        mTask.execute();
+        mTask.execute("58457");
     }
 
     @Override
@@ -90,7 +90,17 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         tv_future.setSelected(false);
     }
 
-    class LoadDataTask extends AsyncTask<Void, Void, List<WeatherBean>> {
+    private void renderDataToView(WeatherBean weatherBean) {
+        mAdapter = new FragmentContainerAdapter(getSupportFragmentManager(), weatherBean);
+        vp_frag_container.setAdapter(mAdapter);
+    }
+
+    class LoadDataTask extends AsyncTask<String, Void, WeatherBean> {
+
+        @Override
+        protected WeatherBean doInBackground(String... strings) {
+            return new WeatherDataSource().getWeatherData(strings[0]);
+        }
 
         @Override
         protected void onPreExecute() {
@@ -101,22 +111,18 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         @Override
-        protected List<WeatherBean> doInBackground(Void... voids) {
-            String weaid = new DbOperate(WeatherActivity.this).getWeaidByName("杭州");
-            new WeatherDataSource().getFeatureWeatherData("58457");
-//            return new WeatherDataSource().getFeatureWeatherData(weaid);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(List<WeatherBean> weatherBeanList) {
+        protected void onPostExecute(WeatherBean weatherBean) {
             mProgressDialog.dismiss();
-            if (weatherBeanList == null) {
+            if (weatherBean == null) {
                 Toast.makeText(WeatherActivity.this, "数据获取失败", Toast.LENGTH_SHORT).show();
             } else {
-                mAdapter = new FragmentContainerAdapter(getSupportFragmentManager());
+//                数据获取成功
+                mAdapter = new FragmentContainerAdapter(getSupportFragmentManager(), weatherBean);
                 vp_frag_container.setAdapter(mAdapter);
+
             }
         }
     }
+
+
 }

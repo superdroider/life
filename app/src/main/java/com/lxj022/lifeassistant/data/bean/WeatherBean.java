@@ -1,11 +1,14 @@
 package com.lxj022.lifeassistant.data.bean;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @des 天气实体类
  */
-public class WeatherBean {
+public class WeatherBean implements Serializable {
     private String cityId;//城市id
     private String cityName;//城市名
     private List<DayWeather> days7;//未来七天天气
@@ -19,6 +22,7 @@ public class WeatherBean {
     private String currentWindPower;//当前风力
     private String currentWea;//当前天气描述
     private String currentWeaType;//当前天气描述
+    private String currentAqi;//当前空气质量
     private String updateTime;//更新时间
     private String stm;//当前大气压
     private String todayUv;//今日紫外线强度
@@ -203,5 +207,13 @@ public class WeatherBean {
 
     public void setCurrentWeaType(String currentWeaType) {
         this.currentWeaType = currentWeaType;
+    }
+
+    public String getCurrentAqi() {
+        return currentAqi;
+    }
+
+    public void setCurrentAqi(String currentAqi) {
+        this.currentAqi = currentAqi;
     }
 }

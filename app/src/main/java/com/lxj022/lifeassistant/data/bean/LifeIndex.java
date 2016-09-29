@@ -1,10 +1,12 @@
 package com.lxj022.lifeassistant.data.bean;
 
+import java.io.Serializable;
+
 /**
  * @author liuxuejiao
  * @des 生活指数
  */
-public class LifeIndex {
+public class LifeIndex implements Serializable{
     /**
      * "name": "晨练指数",
      * "level": "较不宜晨练",

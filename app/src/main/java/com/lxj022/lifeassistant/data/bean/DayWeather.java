@@ -1,10 +1,12 @@
 package com.lxj022.lifeassistant.data.bean;
 
+import java.io.Serializable;
+
 /**
  * @author liuxuejiao
  * @des 未来七日天气
  */
-public class DayWeather {
+public class DayWeather implements Serializable{
     private long time;
 
     private String wholeWea;//天气

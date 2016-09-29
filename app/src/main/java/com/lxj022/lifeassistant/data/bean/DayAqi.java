@@ -1,10 +1,12 @@
 package com.lxj022.lifeassistant.data.bean;
 
+import java.io.Serializable;
+
 /**
  * @author liuxuejioa
  * @des 未来空气质量
  */
-public class DayAqi {
+public class DayAqi implements Serializable{
     private String date;
 
     private String aqi;

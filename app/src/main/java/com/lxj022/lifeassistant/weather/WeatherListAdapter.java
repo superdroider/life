@@ -1,13 +1,18 @@
 package com.lxj022.lifeassistant.weather;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lxj022.lifeassistant.R;
+import com.lxj022.lifeassistant.data.bean.HourData;
 import com.lxj022.lifeassistant.data.bean.WeatherBean;
+import com.lxj022.lifeassistant.util.DateFormatUtil;
+import com.lxj022.lifeassistant.util.WeatherUtil;
 import com.lxj022.lifeassistant.view.SmartImageView;
 
 import java.util.List;
@@ -17,22 +22,24 @@ import java.util.List;
  */
 public class WeatherListAdapter extends BaseAdapter {
 
-    private List<WeatherBean> mWeatherList;
+    private static final String TAG = "WeatherListAdapter";
+    private List<?> mDataList;
     private Context mContext;
 
-    public WeatherListAdapter(List<WeatherBean> weatherList, Context context) {
-        mWeatherList = weatherList;
+    public WeatherListAdapter(List<?> mDataList, Context context) {
+        this.mDataList = mDataList;
         mContext = context;
+        Log.e(TAG, "WeatherListAdapter: " + mDataList);
     }
 
     @Override
     public int getCount() {
-        return mWeatherList.size();
+        return Math.min(mDataList.size(),24);
     }
 
     @Override
     public Object getItem(int i) {
-        return mWeatherList.get(i);
+        return mDataList.get(i);
     }
 
     @Override
@@ -49,20 +56,19 @@ public class WeatherListAdapter extends BaseAdapter {
             holder.tv_temperature = (TextView) view.findViewById(R.id.tv_temperature);
             holder.tv_weather_date = (TextView) view.findViewById(R.id.tv_weather_date);
             holder.tv_weather = (TextView) view.findViewById(R.id.tv_weather);
-            holder.tv_winp = (TextView) view.findViewById(R.id.tv_winp);
-            holder.tv_wind = (TextView) view.findViewById(R.id.tv_wind);
-            holder.iv_weather = (SmartImageView) view.findViewById(R.id.iv_weather);
+            holder.iv_weather = (ImageView) view.findViewById(R.id.iv_weather);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
-        WeatherBean weatherBean = mWeatherList.get(i);
-//        holder.iv_weather.setNetImage(weatherBean.getWeather_icon());
-//        holder.tv_temperature.setText(weatherBean.getTemperature());
-//        holder.tv_weather.setText(weatherBean.getWeather());
-//        holder.tv_weather_date.setText(weatherBean.getDays().substring(5) + "  " + weatherBean.getWeek());
-//        holder.tv_wind.setText(weatherBean.getWind());
-//        holder.tv_winp.setText(weatherBean.getWinp());
+        Object object = mDataList.get(i);
+        if (object instanceof HourData) {
+            HourData hourData = (HourData) object;
+            holder.tv_temperature.setText(hourData.getTemp() + "°");
+            holder.tv_weather.setText(hourData.getTq());
+            holder.tv_weather_date.setText(DateFormatUtil.getHHmm(Long.parseLong(hourData.getDay()) * 1000));
+            holder.iv_weather.setImageResource(WeatherUtil.getImageResourceId("c_"+hourData.getIcon()));
+        }
         return view;
     }
 
@@ -70,8 +76,6 @@ public class WeatherListAdapter extends BaseAdapter {
         TextView tv_weather_date;
         TextView tv_weather;
         TextView tv_temperature;
-        TextView tv_winp;
-        TextView tv_wind;
-        SmartImageView iv_weather;
+        ImageView iv_weather;
     }
 }

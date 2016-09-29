@@ -1,9 +1,11 @@
 package com.lxj022.lifeassistant.data.bean;
 
+import java.io.Serializable;
+
 /**
  * @des 每小时天气
  */
-public class HourData {
+public class HourData implements Serializable{
     /**
      * "hour": "00",
      * "icon": "26",

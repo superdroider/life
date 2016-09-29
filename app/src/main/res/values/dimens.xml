@@ -4,6 +4,12 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="weather_title_bar_text">16sp</dimen>
     <dimen name="weather_title_bar_height">56dp</dimen>
-    <dimen name="item_weather_text_size">18sp</dimen>
+    <dimen name="item_weather_text_size">15sp</dimen>
     <dimen name="item_weather_text_height">30dp</dimen>
+    <dimen name="location">12sp</dimen>
+    <dimen name="update_time">10sp</dimen>
+    <dimen name="weather_desc">20sp</dimen>
+    <dimen name="temp_size">40sp</dimen>
+    <dimen name="wind_desc">16sp</dimen>
+    <dimen name="aqi_desc">14sp</dimen>
 </resources>
