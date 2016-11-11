@@ -55,7 +55,7 @@ public class AES {
             cipher.init(Cipher.DECRYPT_MODE, mSecretKeySpec, new IvParameterSpec(getIV()));//使用解密模式初始化 密钥
             byte[] decrypt = cipher.doFinal(calculate(str));
             String result = new String(decrypt, "utf-8");
-            WriteStringToFile("/mnt/sdcard/json", new String(decrypt, "utf-8"));
+            WriteStringToFile("/mnt/sdcard/weather.json", new String(decrypt, "utf-8"));
             System.out.println("method4-解密后：" + new String(decrypt, "utf-8"));
             return result;
         } catch (Exception e) {

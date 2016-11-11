@@ -1,5 +1,6 @@
 package com.lxj022.lifeassistant.data.remote;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -8,6 +9,7 @@ import com.lxj022.lifeassistant.data.BeanPaser;
 import com.lxj022.lifeassistant.data.HttpRequest;
 import com.lxj022.lifeassistant.data.UrlBuilder;
 import com.lxj022.lifeassistant.data.bean.WeatherBean;
+import com.lxj022.lifeassistant.data.local.db.DbOperate;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -23,20 +25,28 @@ public class WeatherDataSource {
      * @param cityId 城市id
      * @return
      */
-    public WeatherBean getWeatherData(String cityId) {
+    public WeatherBean getWeatherData(Context context, String cityId) {
         WeatherBean weatherBean = null;
+        String result = null;
+        DbOperate dbOperate = new DbOperate(context);
 //        获取请求地址
         String futureWeatherDataUrl = new UrlBuilder().getWeatherDataUrl(cityId);
-        if (!TextUtils.isEmpty(futureWeatherDataUrl)) {
-            String response = HttpRequest.doGet(futureWeatherDataUrl);
-            if (!TextUtils.isEmpty(response)) {
-                String result = AES.decrypt(response);
-                //请求结果不为空则进行解析
-                if (!TextUtils.isEmpty(result)) {
-                    weatherBean = new BeanPaser().parseWeatherData(result);
-                }
+
+        if (TextUtils.isEmpty(futureWeatherDataUrl)) {
+            return null;
+        }
+        String response = HttpRequest.doGet(futureWeatherDataUrl);
+        if (TextUtils.isEmpty(response)) {
+            result = dbOperate.readWeatherData(cityId);
+        } else {
+            result = AES.decrypt(response);
+            if (TextUtils.isEmpty(result)) {
+                result = dbOperate.readWeatherData(cityId);
+            } else {
+                new DbOperate(context).saveWeatherData(cityId, result);
             }
         }
+        weatherBean = new BeanPaser().parseWeatherData(result);
         return weatherBean;
     }
 }

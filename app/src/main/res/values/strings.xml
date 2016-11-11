@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">生活助手</string>
+    <string name="default_city">洛阳</string>
 </resources>

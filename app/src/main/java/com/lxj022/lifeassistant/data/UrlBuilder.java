@@ -11,6 +11,7 @@ public class UrlBuilder {
     private static final String WEATHER_SIGN = "b59bc3ef6191eb9f747dd4e83c99f2a4";
     //    private static final String WEATHER_URL = "http://api.k780.com:88/?";
     private static final String WEATHER_URL = "http://tianqi.2345.com";
+    private static final String EXPRESS_URL = "http://jisukdcx.market.alicloudapi.com/express/type";
 
     /**
      * 获取天气城市列表URL
@@ -41,26 +42,6 @@ public class UrlBuilder {
     }
 
     /**
-     * 获取请求未来天气数据的url
-     *
-     * @return
-     */
-    public String getFutureWeatherDataUrl(String weaid) {
-        StringBuilder featureUrl = new StringBuilder();
-        featureUrl.append(WEATHER_URL);
-        Map<String, String> params = getBaseWeatherParams();
-        params.put("app", "weather.future");
-        params.put("weaid", weaid);
-        for (String key : params.keySet()) {
-            featureUrl.append(key);
-            featureUrl.append("=");
-            featureUrl.append(params.get(key));
-            featureUrl.append("&");
-        }
-        return featureUrl.substring(0, featureUrl.length() - 1);
-    }
-
-    /**
      * 获取天气请求基本参数
      *
      * @return
@@ -71,5 +52,18 @@ public class UrlBuilder {
         params.put("sign", WEATHER_SIGN);
         params.put("format", "json");
         return params;
+    }
+
+    /**
+     * 获取快递公司请求地址
+     *
+     * @return
+     */
+    public String getExpressTypeUrl() {
+        StringBuilder expressTypeUrl = new StringBuilder();
+        expressTypeUrl.
+                append(EXPRESS_URL).
+                append("type");
+        return EXPRESS_URL;
     }
 }

@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#ffffff</color>
-    <color name="title_bar">#2F9AFA</color>
+    <color name="title_bar">#1B78C6</color>
     <color name="item_weather_text_color">#4C4D4D</color>
     <color name="header_bg">#1B78C6</color>
     <color name="location">#aaffffff</color>
@@ -12,4 +12,9 @@
     <color name="ll_weather_bar">#22ffffff</color>
     <color name="line">#44ffffff</color>
     <color name="weather_normal_text_color">#ddffffff</color>
+    <color name="footer_text">#545455</color>
+    <color name="city_list_page_bg">#E9F1F4</color>
+    <color name="note_text">#0B0B0B</color>
+    <color name="note_bg">#F9F9F9</color>
+    <color name="note_list_bg">#ECECEC</color>
 </resources>

@@ -41,6 +41,31 @@ public class DateFormatUtil {
     }
 
     /**
+     * 获取当前年月日
+     *
+     * @return
+     */
+    public static long getCurrentDay() {
+        DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Calendar calendar = Calendar.getInstance();
+        calendar.getTimeInMillis();
+        return Long.parseLong(formatter.format(calendar.getTime()));
+    }
+
+
+    /**
+     * long转化为年月日
+     *
+     * @return
+     */
+    public static long longToDay(long time) {
+        DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        return Long.parseLong(formatter.format(calendar.getTime()));
+    }
+
+    /**
      * 得到现在小时
      *
      * @return
@@ -78,16 +103,15 @@ public class DateFormatUtil {
      * @return
      */
     public static String getWeekAndDate(long timeStr) {
-        Log.e("tag", "getWeekAndDate: "+timeStr);
         String day = longToString(timeStr);
         String week = getWeekOfDate(timeStr);
-
         return day + " " + week;
 
     }
 
     /**
      * 格式化时间为HH:mm
+     *
      * @param timeStr
      * @return
      */
@@ -96,7 +120,6 @@ public class DateFormatUtil {
         currentTime.setTime(timeStr);
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
         String dateString = formatter.format(currentTime);
-        Log.e("tag", "getHHmm: "+timeStr +">>>"+dateString);
         return dateString;
 
     }

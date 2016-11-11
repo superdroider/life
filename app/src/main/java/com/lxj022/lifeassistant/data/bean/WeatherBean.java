@@ -18,11 +18,13 @@ public class WeatherBean implements Serializable {
     private List<DayWeather> days8;//未来8天天气
     private String currentTemp;//当前温度
     private String currentHumidity;//当前天气湿度
+    private String tomorrowHumidity;//当前天气湿度
     private String currentWindDirection;//当前风向
     private String currentWindPower;//当前风力
     private String currentWea;//当前天气描述
     private String currentWeaType;//当前天气描述
     private String currentAqi;//当前空气质量
+    private String tomorrowAqi;//明天空气质量
     private String updateTime;//更新时间
     private String stm;//当前大气压
     private String todayUv;//今日紫外线强度
@@ -215,5 +217,21 @@ public class WeatherBean implements Serializable {
 
     public void setCurrentAqi(String currentAqi) {
         this.currentAqi = currentAqi;
+    }
+
+    public String getTomorrowAqi() {
+        return tomorrowAqi;
+    }
+
+    public void setTomorrowAqi(String tomorrowAqi) {
+        this.tomorrowAqi = tomorrowAqi;
+    }
+
+    public String getTomorrowHumidity() {
+        return tomorrowHumidity;
+    }
+
+    public void setTomorrowHumidity(String tomorrowHumidity) {
+        this.tomorrowHumidity = tomorrowHumidity;
     }
 }

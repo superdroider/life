@@ -14,7 +14,6 @@
         android:id="@+id/tv_weather_date"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/item_weather_text_height"
-        android:layout_weight="1"
         android:gravity="center_vertical"
         android:text="09/05 周一"
         android:textColor="@color/item_weather_text_color"
@@ -24,10 +23,10 @@
         android:id="@+id/lv_item_top"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="2"
-
+        android:layout_weight="1"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:paddingLeft="10dp"
         android:gravity="center_vertical">
 
         <ImageView
@@ -42,8 +41,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
+            android:minWidth="80dp"
             android:text="多云"
-            android:minWidth="50dp"
             android:textColor="@color/item_weather_text_color"
             android:textSize="@dimen/item_weather_text_size" />
 
@@ -53,11 +52,11 @@
     <TextView
         android:id="@+id/tv_temperature"
         android:layout_width="wrap_content"
-        android:layout_weight="1"
         android:layout_height="@dimen/item_weather_text_height"
         android:layout_alignParentRight="true"
         android:gravity="center_vertical"
         android:singleLine="true"
+        android:layout_weight="1"
         android:layout_marginRight="10dp"
         android:text="10-20"
         android:textColor="@color/item_weather_text_color"
@@ -65,10 +64,10 @@
     <TextView
         android:id="@+id/tv_aqi"
         android:layout_width="wrap_content"
-        android:layout_weight="1"
         android:layout_height="@dimen/item_weather_text_height"
         android:gravity="center_vertical"
         android:singleLine="true"
+        android:layout_weight="1"
         android:text="10-20"
         android:textColor="@color/item_weather_text_color"
         android:textSize="@dimen/item_weather_text_size" />

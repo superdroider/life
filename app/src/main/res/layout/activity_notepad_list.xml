@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/note_list_bg"
+    android:orientation="vertical"
+    tools:context="com.lxj022.lifeassistant.notepad.NotepadListActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/title_bar">
+
+        <ImageButton
+            android:id="@+id/ib_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:padding="10dp"
+            android:src="@drawable/weather_title_bar_back_selector" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="便签"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_bar_text" />
+
+        <ImageButton
+            android:id="@+id/ib_add_note"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:padding="8dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/notepad_add_img_selector" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/lv_note_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="8dp"
+        android:visibility="gone">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/tv_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="无数据"
+        android:textColor="#bbbbbb"
+        android:textSize="20sp"
+        android:visibility="gone" />
+</LinearLayout>

@@ -1,52 +1,32 @@
 package com.lxj022.lifeassistant.data.bean;
 
+import java.io.Serializable;
+
 /**
  * @author Superdroid
  * @time 2016/9/1 20:11
  * @des
  */
-public class CityBean {
-    private String weaid;
-    private String citynm;
-    private String cityno;
-    private String cityid;
+public class CityBean implements Serializable{
+    private String areaId;
+    private String cityName;
+    private String provinceName;
 
-    public CityBean(String weaid, String citynm, String cityno, String cityid) {
-        this.weaid = weaid;
-        this.citynm = citynm;
-        this.cityno = cityno;
-        this.cityid = cityid;
+    public CityBean(String areaId, String cityName, String provinceName) {
+        this.areaId = areaId;
+        this.cityName = cityName;
+        this.provinceName = provinceName;
     }
 
-    public String getWeaid() {
-        return weaid;
+    public String getAreaId() {
+        return areaId;
     }
 
-    public void setWeaid(String weaid) {
-        this.weaid = weaid;
+    public String getCityName() {
+        return cityName;
     }
 
-    public String getCitynm() {
-        return citynm;
-    }
-
-    public void setCitynm(String citynm) {
-        this.citynm = citynm;
-    }
-
-    public String getCityno() {
-        return cityno;
-    }
-
-    public void setCityno(String cityno) {
-        this.cityno = cityno;
-    }
-
-    public String getCityid() {
-        return cityid;
-    }
-
-    public void setCityid(String cityid) {
-        this.cityid = cityid;
+    public String getProvinceName() {
+        return provinceName;
     }
 }

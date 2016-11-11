@@ -1,6 +1,14 @@
 package com.lxj022.lifeassistant.util;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
+
 import com.lxj022.lifeassistant.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 
 /**
  * Created by liuxuejiao
@@ -12,7 +20,7 @@ public class WeatherUtil {
      * 根据AQI的值判断空气质量级别
      *
      * @param aqi
-     * @return
+     * @return 空气质量文字描述
      */
     public static String getAqiClass(int aqi) {
         if (aqi < 51) {
@@ -27,6 +35,28 @@ public class WeatherUtil {
             return "重度污染";
         } else {
             return "严重污染";
+        }
+    }
+
+    /**
+     * 根据AQI的值判断空气质量级别
+     *
+     * @param aqi
+     * @return 空气质量颜色描述
+     */
+    public static int getAqiColor(int aqi) {
+        if (aqi < 51) {
+            return Color.parseColor("#6ACD06");
+        } else if (aqi < 101) {
+            return Color.parseColor("#FACF29");
+        } else if (aqi < 151) {
+            return Color.parseColor("#FEA73F");
+        } else if (aqi < 201) {
+            return Color.parseColor("#E95B11");
+        } else if (aqi < 301) {
+            return Color.parseColor("#940351");
+        } else {
+            return Color.parseColor("#5F001C");
         }
     }
 
@@ -51,4 +81,42 @@ public class WeatherUtil {
         }
         return resId;
     }
+
+    public static void copyWeatherDatabase(final Context context) {
+        new Thread() {
+            @Override
+            public void run() {
+                File dir = new File("/data/data/com.lxj022.lifeassistant/databases");
+                if (!dir.exists()) {
+                    try {
+                        dir.mkdir();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                File dest = new File(dir, "weather.db");
+                if (dest.exists()) {
+                    Log.e("tag", "copyWeatherDatabase: db exists");
+                    return;
+                }
+
+                try {
+                    dest.createNewFile();
+                    InputStream in = context.getResources().openRawResource(R.raw.weather);
+                    int size = in.available();
+                    byte buf[] = new byte[size];
+                    in.read(buf);
+                    in.close();
+                    FileOutputStream out = new FileOutputStream(dest);
+                    out.write(buf);
+                    out.close();
+                    Log.e("tag", "copyWeatherDatabase: ok");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
+    }
+
 }

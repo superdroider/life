@@ -22,47 +22,6 @@ import java.util.List;
  */
 public class BeanPaser {
 
-    /**
-     * 解析天气城市对象
-     *
-     * @param jsonStr
-     * @return
-     */
-    public List<CityBean> parseWeathercity(String jsonStr) {
-        List<CityBean> cityList = null;
-        try {
-            JSONObject jsonObject = new JSONObject(jsonStr);
-            String success = jsonObject.getString("success");
-            if (success.equals("1")) {
-                cityList = new ArrayList<>();
-                JSONObject result = jsonObject.getJSONObject("result");
-                JSONObject object = null;
-                String weaid;
-                String citynm;
-                String cityno;
-                String cityid;
-                CityBean cityBean;
-                //通过获取的json数据分析得到 最多有2645条记录
-                for (int i = 1; i <= 2645; i++) {
-                    try {
-                        object = result.getJSONObject("" + i);
-                    } catch (JSONException e) {
-                        //跳过不存在的数字
-                        continue;
-                    }
-                    weaid = object.getString("weaid");
-                    citynm = object.getString("citynm");
-                    cityno = object.getString("cityno");
-                    cityid = object.getString("cityid");
-                    cityBean = new CityBean(weaid, citynm, cityno, cityid);
-                    cityList.add(cityBean);
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return cityList;
-    }
 
 
     /**
@@ -106,7 +65,7 @@ public class BeanPaser {
             if (!jsonObject.isNull("days8")) {
                 JSONArray days8Arr = jsonObject.getJSONArray("days8");
                 DayWeather days8 = null;
-                List<DayWeather> days7List = new ArrayList<>();
+                List<DayWeather> days8List = new ArrayList<>();
                 String dayTemp = null, nightTemp = null, dayWea = null, nightWea = null;
 
                 for (int i = 0; i < days8Arr.length(); i++) {
@@ -136,10 +95,17 @@ public class BeanPaser {
                             days8.setWholeWea(dayWea + "转" + nightWea);
                         }
                     }
-                    days7List.add(days8);
+                    days8List.add(days8);
                 }
-                weatherBean.setDays7(days7List);
+                weatherBean.setDays8(days8List);
             }
+
+            if (!jsonObject.isNull("aqi_tomorrow")) {
+                JSONObject aqi_tomorrowobj = jsonObject.getJSONObject("aqi_tomorrow");
+                if (!aqi_tomorrowobj.isNull("AQI"))
+                    weatherBean.setTomorrowAqi("空气质量:" + aqi_tomorrowobj.getInt("AQI") + "|" + WeatherUtil.getAqiClass(aqi_tomorrowobj.getInt("AQI")));
+            }
+
             //                今日生活指数
             if (!jsonObject.isNull("zs")) {
                 JSONArray zsArr = jsonObject.getJSONArray("zs");
@@ -229,6 +195,9 @@ public class BeanPaser {
                         weatherBean.setTodayUv(uvObj.getString("today"));
                     if (!uvObj.isNull("tomorrow"))
                         weatherBean.setTomorrowUv(uvObj.getString("tomorrow"));
+                }
+                if (!skObj.isNull("humidity_48hours")) {
+                    weatherBean.setTomorrowHumidity(skObj.getString("humidity_48hours"));
                 }
             }
             if (!jsonObject.isNull("sk_weather")) {

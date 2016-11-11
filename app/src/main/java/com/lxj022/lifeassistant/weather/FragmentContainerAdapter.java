@@ -21,11 +21,22 @@ public class FragmentContainerAdapter extends FragmentPagerAdapter {
         super(fm);
         Log.e("tag", "FragmentContainerAdapter: ");
         this.weatherBean = weatherBean;
+        Log.e("ContainerAdapter", "FragmentContainerAdapter: " + weatherBean.getCityName());
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        Log.e("tag", "getItemPosition: ");
+//        切换城市后更新数据
+        WeatherFragment frag = (WeatherFragment) object;
+        frag.updateData(weatherBean);
+        frag.getArguments().putSerializable("obj", weatherBean);
+        return super.getItemPosition(object);
     }
 
     @Override
     public Fragment getItem(int position) {
-        Log.e("tag", "getItem: "+position );
+        Log.e("tag", "getItem: " + position + "--" + weatherBean.getCityName());
         WeatherFragment fragment = new WeatherFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("type", position);
@@ -37,5 +48,10 @@ public class FragmentContainerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return 3;
+    }
+
+    public void updateData(WeatherBean weatherBean) {
+        this.weatherBean = weatherBean;
+        notifyDataSetChanged();
     }
 }
