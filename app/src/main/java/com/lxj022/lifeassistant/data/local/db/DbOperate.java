@@ -218,6 +218,7 @@ public class DbOperate {
             Note note;
             while (cursor.moveToNext()) {
                 note = new Note();
+
                 note.set_id(cursor.getInt(cursor.getColumnIndex("_id")));
                 note.setContent(cursor.getString(cursor.getColumnIndex("content")));
                 note.setTime(cursor.getString(cursor.getColumnIndex("time")));
